@@ -10,7 +10,7 @@ function Square({ value, onSquareClick, winning=false }) {
   );
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, currentMove }) {
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
       return;
@@ -31,6 +31,8 @@ function Board({ xIsNext, squares, onPlay }) {
   let status;
   if (winner) {
     status = "Winner: " + winner;
+  } else if (currentMove === 9) {
+    status = "Draw!"
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O"); // ternary conditional operator
   }
@@ -114,7 +116,7 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} currentMove={currentMove}/>
       </div>
       <div className="game-info">
         <div className="center"><button onClick={toggleDisplayOrder}>{displayOrder}</button></div>
